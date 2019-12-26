@@ -1,5 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Demo.SamplePopupView">
-    <ContentPage.Content>
-    </ContentPage.Content>
-</ContentPage>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<mvxPopupNavigation:MvxPopupPage
+    x:Class="Demo.Views.SamplePopupView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mvxPopupNavigation="clr-namespace:MvxPopupNavigation;assembly=MvxPopupNavigation">
+    <ContentPage.Content />
+</mvxPopupNavigation:MvxPopupPage>
