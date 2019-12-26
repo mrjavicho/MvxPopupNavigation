@@ -7,12 +7,12 @@ This library allows to use [Rg.Plugin.Popup](https://github.com/rotorgames/Rg.Pl
    ```c#
    public class Setup : MvxFormsAndroidSetup<MvxApp, App>
    {
-   	protected override IMvxFormsPagePresenter CreateFormsPagePresenter(IMvxFormsViewPresenter viewPresenter)
-   	{
-   		var formsPagePresenter = new CustomMvxFormsPagePresenter(viewPresenter);
-       Mvx.IoCProvider.RegisterSingleton<IMvxFormsPagePresenter>(formsPagePresenter);
-       return formsPagePresenter;
-   	}
+     protected override IMvxFormsPagePresenter CreateFormsPagePresenter(IMvxFormsViewPresenter viewPresenter)
+   {
+   var formsPagePresenter = new CustomMvxFormsPagePresenter(viewPresenter);
+   Mvx.IoCProvider.RegisterSingleton<IMvxFormsPagePresenter>(formsPagePresenter);
+   return formsPagePresenter;
+   }
    }
    ```
 
@@ -33,16 +33,16 @@ This library allows to use [Rg.Plugin.Popup](https://github.com/rotorgames/Rg.Pl
 
    
 
-3. Use the navigation attribute in the page C# declaration. 
+3. Use the navigation attribute in the  C# declaration. 
 
    ```c#
    [MvxPopUpPage]
    public partial class SamplePopupView : MvxPopupPage
    {
-   	public SamplePopupView()
-   	{
-   		InitializeComponent();
-   	}
+   public SamplePopupView()
+   {
+   InitializeComponent();
+   }
    }
    ```
 
