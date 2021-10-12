@@ -27,11 +27,9 @@ namespace MvxPopupNavigation
 {
     public class CustomMvxFormsPagePresenter : MvxFormsPagePresenter
     {
-        protected readonly IMvxFormsPagePresenter _mvxPagePresenter;
-        
         public CustomMvxFormsPagePresenter(IMvxFormsViewPresenter platformPresenter) : base(platformPresenter)
         {
-            _mvxPagePresenter = Mvx.IoCProvider.Resolve<IMvxFormsPagePresenter>();
+            
         }
 
         public override void RegisterAttributeTypes()
@@ -42,8 +40,7 @@ namespace MvxPopupNavigation
 
         protected virtual MvxPage GetLastPage()
         {
-            var topNavigationPage = _mvxPagePresenter.TopNavigationPage();
-            return topNavigationPage?.Navigation?.NavigationStack?.OfType<MvxPage>().LastOrDefault();
+            return TopNavigationPage()?.Navigation?.NavigationStack?.OfType<MvxPage>().LastOrDefault();
         }
 
         protected virtual async Task<bool> ShowPopUpPage(Type view, MvxPopUpPageAttribute attribute,
