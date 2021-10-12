@@ -1,27 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <Owners>mrjavicho</Owners>
     <Title>MvxPopupNavigation</Title>
-    <PackageVersion>1.0.1</PackageVersion>
     <Authors>mrjavicho</Authors>
     <Description>Popup navigation attribute for MvvmCross.Forms applications</Description>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>Mvx.Plugin.PopupNavigation</PackageId>
-    <Copyright>2019 Javier Huamanchumo</Copyright>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <Copyright>2021 Javier Huamanchumo</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/mrjavicho/MvxPopupNavigation</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageVersion>2.0.0</PackageVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
-    <PackageReference Include="MvvmCross.Forms" Version="6.4.1" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
+    <PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.13" />
+    <None Include="..\License\license.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

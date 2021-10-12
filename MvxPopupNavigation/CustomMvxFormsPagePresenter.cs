@@ -13,8 +13,12 @@
 //  limitations under the License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using MvvmCross;
 using MvvmCross.Forms.Presenters;
+using MvvmCross.Forms.Views;
+using MvvmCross.Navigation;
 using MvvmCross.Presenters;
 using MvvmCross.ViewModels;
 using Rg.Plugins.Popup.Pages;
@@ -23,9 +27,11 @@ namespace MvxPopupNavigation
 {
     public class CustomMvxFormsPagePresenter : MvxFormsPagePresenter
     {
+        protected readonly IMvxFormsPagePresenter _mvxPagePresenter;
+        
         public CustomMvxFormsPagePresenter(IMvxFormsViewPresenter platformPresenter) : base(platformPresenter)
         {
-
+            _mvxPagePresenter = Mvx.IoCProvider.Resolve<IMvxFormsPagePresenter>();
         }
 
         public override void RegisterAttributeTypes()
@@ -34,44 +40,49 @@ namespace MvxPopupNavigation
             AttributeTypesToActionsDictionary.Register<MvxPopUpPageAttribute>(ShowPopUpPage, ClosePopUpPage);
         }
 
-        public async Task<bool> ShowPopUpPage(Type view, MvxPopUpPageAttribute attribute,
+        protected virtual MvxPage GetLastPage()
+        {
+            var topNavigationPage = _mvxPagePresenter.TopNavigationPage();
+            return topNavigationPage?.Navigation?.NavigationStack?.OfType<MvxPage>().LastOrDefault();
+        }
+
+        protected virtual async Task<bool> ShowPopUpPage(Type view, MvxPopUpPageAttribute attribute,
                                               MvxViewModelRequest request)
         {
             try
             {
                 var page = CreatePage(view, request, attribute);
-                if (page is PopupPage popupPage)
+                if (!(page is PopupPage popupPage))
                 {
-                    var popupNavInstance = Rg.Plugins.Popup.Services.PopupNavigation.Instance;
-                    var currentPage = CurrentPageHelper.GetCurrentPage();
-                    currentPage.ViewModel.ViewDisappearing();
-
-                    await popupNavInstance.PushAsync(popupPage);
-                    return true;
+                    return false;
                 }
-                return false;
+                
+                var popupNavInstance = Rg.Plugins.Popup.Services.PopupNavigation.Instance;
+                GetLastPage()?.ViewModel?.ViewDisappearing();
+                GetLastPage()?.ViewModel?.ViewDisappeared();
+                await popupNavInstance.PushAsync(popupPage);
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                return false;
             }
         }
 
-        public async Task<bool> ClosePopUpPage(IMvxViewModel viewModel, MvxPopUpPageAttribute attribute)
+        protected virtual async Task<bool> ClosePopUpPage(IMvxViewModel viewModel, MvxPopUpPageAttribute attribute)
         {
             try
             {
                 var popupNavInstance = Rg.Plugins.Popup.Services.PopupNavigation.Instance;
-                if (popupNavInstance != null && popupNavInstance.PopupStack.Count > 0)
+                if (popupNavInstance.PopupStack.Count > 0)
                 {
                     await popupNavInstance.PopAsync();
-                    var currentPage = CurrentPageHelper.GetCurrentPage();
-                    currentPage.ViewModel.ViewAppearing();
-                    currentPage.ViewModel.ViewAppeared();
+                    GetLastPage()?.ViewModel?.ViewAppearing();
+                    GetLastPage()?.ViewModel?.ViewAppeared();
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
